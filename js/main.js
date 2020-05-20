@@ -41,43 +41,51 @@
 })(window, document);
 
 class Product {
-    constructor(name, desc, amount, price) {
+    constructor(id, name, desc, quantity, price) {
+        this.id = id;
         this.name = name;
         this.desc = desc;
-        this.amount = amount;
+        this.quantity = quantity;
         this.price = price;
     }
 }
 
-var arr = [new Product("NAME-NAME", "Desc!!", "1", "100")];
-(function () {
-    console.log(arr[0].price);
+var arr = [
+    new Product(1, "Товар-1", "Описание товара 1", 1, 100),
+    new Product(2, "Товар 2", "Описание товара 2", 1, 200),
+    new Product(3, "Товар 3", "Описание товара 3", 1, 300),
+];
 
+(function f() {
+    arr.forEach(item => appendHtml(item));
 })(window,document)
 
-
-function myFunction(e) {
+function myFunction() {
     let form = document.querySelector("form");
     let product = new Product();
+    product.id = arr.length;
+    console.log(form.elements);
     product.name = form.elements.name.value;
     product.desc = form.elements.desc.value;
-    product.amount = form.elements.amount.value;
+    product.quantity = form.elements.quantity.value;
     product.price = form.elements.price.value;
     form.reset();
-   arr.push(product);
-   console.log(arr);
-   appendHtml(product);
+    appendHtml(product);
+    console.log(arr)
 }
 
 function appendHtml(product) {
     let productList = document.querySelector('.product');
     let productItem = document.createElement('div');
     productItem.classList.add('product-item');
-    productItem.innerHTML = '<div class="product-item__header">' + product.name + '</div><div class="product-item__info">' + product.desc + '</div><div class="product-item__price">' + product.price + '</div>';
+    productItem.id = product.id;
+    productItem.innerHTML = '<div class="product-item__header">' + product.name + '</div><div class="product-item__info">' + product.desc + '</div><div class="product-item__price">' + product.price + '</div><div class="product-item__remove" onclick="removeItem(this)"></div>';
     productList.appendChild(productItem);
 }
 
-
+function removeItem(el) {
+    el.parentNode.remove();
+}
 
 // (function () {
 //     let products = document.querySelector('.product');
