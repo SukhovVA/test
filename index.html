@@ -11,25 +11,22 @@
     <div class="product">
         <div class="product-item">
             <div class="product-item__header">Lorem</div>
-            <div class="product-item__image"></div>
-            <div class="product-item__info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad alias blanditiis
-                consequatur.
+            <div class="product-item__info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad alias
+                blanditiis consequatur.
             </div>
             <div class="product-item__price">100</div>
         </div>
         <div class="product-item">
             <div class="product-item__header">Lorem</div>
-            <div class="product-item__image"></div>
-            <div class="product-item__info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad alias blanditiis
-                consequatur.
+            <div class="product-item__info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad alias
+                blanditiis consequatur.
             </div>
             <div class="product-item__price">100</div>
         </div>
         <div class="product-item">
             <div class="product-item__header">Lorem</div>
-            <div class="product-item__image"></div>
-            <div class="product-item__info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad alias blanditiis
-                consequatur.
+            <div class="product-item__info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad alias
+                blanditiis consequatur.
             </div>
             <div class="product-item__price">100</div>
         </div>
@@ -44,6 +41,13 @@
             <div class="modal__content">
                 <div class="modal__text">
                     <div class="modal__title">Добавление товара</div>
+                    <form onsubmit="myFunction()">
+                        <input id="name" type="text" placeholder="Введите название товара" required>
+                        <input id="desc" type="text" placeholder="Введите описание товара" required>
+                        <input id="price" type="number" placeholder="Введите цену" required min="1">
+                        <input id="amount" type="number" placeholder="Количество" required min="1">
+                        <button type="submit" >OK</button>
+                    </form>
                 </div>
             </div>
         </div>

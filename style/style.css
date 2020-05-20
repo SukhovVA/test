@@ -187,6 +187,7 @@ div.modal_open.modal-overlay {
   border: 1px solid #333;
   border-radius: 4px;
   padding: 1em;
+  margin: 1em 0;
 }
 .product-item__header {
   font-weight: bold;
@@ -196,5 +197,25 @@ div.modal_open.modal-overlay {
 .product-item__price {
   text-align: right;
   font-size: 1.2em;
+}
+input {
+  word-wrap: break-word;
+  font-size: 15px;
+  line-height: 24px;
+  font-family: Arial, sans-serif;
+  font-weight: 400;
+  padding: 6px 11px;
+  border: 1px solid #ecf1f7;
+  background-color: #ecf1f7;
+  height: 56px;
+  border-radius: 4px;
+  margin-bottom: 1em;
+}
+input:focus {
+  background-color: #FFF;
+}
+form {
+  display: flex;
+  flex-direction: column;
 }
 /*# sourceMappingURL=style.css.map */
