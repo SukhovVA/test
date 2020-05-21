@@ -31,10 +31,10 @@
 
             openModal();
 
-            el.addEventListener("click", closeModal, true);
+            el.addEventListener("click", closeModal, false);
             doc.addEventListener("keydown", closeModal, false);
 
-            const close = () => {
+            let close = () => {
                 el.classList.remove("modal_anim");
                 setTimeout(function () {
                     doc.body.classList.remove("modal_open");
