@@ -103,9 +103,9 @@ function quantityChange(el) {
 
 function sendData() {
     let data = {
-        TerminalKey : "TestB",
+        TerminalKey : "TinkoffBankTest",
         Amount : getAmount(),
-        OrderId : "SomeOrderId",
+        OrderId : "12354",
         Description : "Test Order",
         Receipt : {
             Email : "test@test.test",
@@ -125,13 +125,13 @@ function sendData() {
         },
     }).then(response => {
         return response.json();
-    }).then(data => console.log(data));
+    }).then(data => window.location.replace(data.PaymentURL));
 }
 
 function getAmount() {
     let total = 0;
     arr.forEach(el => total += el.price*el.quantity*100);
-    return total;
+    return total.toString();
 }
 
 function getItems() {
