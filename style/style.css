@@ -216,6 +216,12 @@ div.modal_open.modal-overlay {
   background-size: contain;
   cursor: pointer;
 }
+.product-item img {
+  margin-bottom: 1em;
+}
+.product-item input {
+  width: 50%;
+}
 input {
   word-wrap: break-word;
   font-size: 15px;
