@@ -59,7 +59,7 @@ function appendHtml(product) {
     let productItem = document.createElement('div');
     productItem.classList.add('product-item');
     productItem.id = product.id;
-    productItem.innerHTML = '<div class="product-item__header">' + product.name + '</div><img src="https://via.placeholder.com/300x300"><div class="product-item__info">' + product.desc + '</div><div class="product-item__price">' + product.price + '</div><div class="product-item__remove" onclick="removeItem(this)"></div><input type="number" min="1" required value="1" oninput="quantityChange(this)">';
+    productItem.innerHTML = '<div class="product-item__header">' + product.name + '</div><img src="https://via.placeholder.com/300x300"><div class="product-item__info">' + product.desc + '</div><div class="product-item__price"> Цена товара : ' + product.price + '</div><div class="product-item__remove" onclick="removeItem(this)"></div><input type="number" min="1" required value="1" oninput="quantityChange(this)">';
     productList.appendChild(productItem);
 }
 
