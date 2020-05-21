@@ -39,7 +39,6 @@ function random() {
  */
 function formSubmit() {
     let form = document.querySelector("form");
-    form.checkValidity();
     let product = new Product();
     product.id = random();
     product.name = form.elements.name.value;
