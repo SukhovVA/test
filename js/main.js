@@ -13,7 +13,7 @@
             if (el === null) throw "DOM element isn't created!";
 
             const closeModal = e => {
-                if (e.target === el || e.key === "Escape" || e.target.className === "modal__close" || e.target.type === "submit") {
+                if (e.key === "Escape" || e.target.className === "modal__close" || e.target.type === "submit") {
                     el.classList.remove("modal_anim");
                     setTimeout(function () {
                         doc.body.classList.remove("modal_open");
@@ -64,13 +64,13 @@ function myFunction() {
     let form = document.querySelector("form");
     let product = new Product();
     product.id = arr.length;
-    console.log(form.elements);
     product.name = form.elements.name.value;
     product.desc = form.elements.desc.value;
     product.quantity = form.elements.quantity.value;
     product.price = form.elements.price.value;
     form.reset();
     appendHtml(product);
+    arr.push(product);
     console.log(arr)
 }
 
@@ -84,6 +84,7 @@ function appendHtml(product) {
 }
 
 function removeItem(el) {
+
     el.parentNode.remove();
 }
 
