@@ -121,7 +121,7 @@ function sendData() {
         },
     }).then(response => {
         return response.json();
-    }).then(data => window.location.href(data.PaymentURL));
+    }).then(data => window.location.href = data.PaymentURL);
 }
 
 /**
