@@ -39,12 +39,13 @@ function random() {
  */
 function formSubmit() {
     let form = document.querySelector("form");
+    form.checkValidity();
     let product = new Product();
     product.id = random();
     product.name = form.elements.name.value;
     product.desc = form.elements.desc.value;
-    product.quantity = form.elements.quantity.value;
-    product.price = form.elements.price.value;
+    product.quantity = parseInt(form.elements.quantity.value);
+    product.price = parseInt(form.elements.price.value);
     form.reset();
     appendHtml(product, arr.length);
     arr.push(product);
