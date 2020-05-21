@@ -1,45 +1,8 @@
 'use strict';
+
 /**
- * Модальное окно
+ * Класс для единицы товара
  */
-(function (win, doc) {
-    "use strict";
-    const modalEl = doc.querySelectorAll("[data-modal]");
-    [].forEach.call(modalEl, function (element) {
-        element.addEventListener('click', function (e) {
-            e.preventDefault();
-            let el = document.getElementById(this.getAttribute("data-modal"));
-
-            if (el === null) throw "DOM element isn't created!";
-
-            const closeModal = e => {
-                if (e.key === "Escape" || e.target.className === "modal__close" || e.target.type === "submit") {
-                    el.classList.remove("modal_anim");
-                    setTimeout(function () {
-                        doc.body.classList.remove("modal_open");
-
-                        el.classList.remove("modal_open");
-
-                        el.removeEventListener("click", closeModal);
-                        doc.removeEventListener("keydown", closeModal);
-                    }, 200)
-                }
-            };
-
-            const openModal = () => {
-                doc.body.classList.add("modal_open");
-                el.classList.add("modal_open");
-                el.classList.add("modal_anim");
-            };
-
-            openModal();
-
-            el.addEventListener("click", closeModal, true);
-            doc.addEventListener("keydown", closeModal, false);
-        }, false)
-    })
-})(window, document);
-
 class Product {
     constructor(id, name, desc, quantity, price) {
         this.id = id;
@@ -50,19 +13,31 @@ class Product {
     }
 }
 
+/**
+ * Массив с заранее созданными товарами
+ */
 var arr = [
     new Product(1,"Товар-1", "Описание товара 1", 1, 100),
     new Product(2, "Товар 2", "Описание товара 2", 1, 200),
     new Product(3, "Товар 3", "Описание товара 3", 1, 300),
 ];
-
+/**
+ * Наполнение страницы
+ */
 arr.forEach(item => appendHtml(item));
 
+/**
+ * Генерация id
+ * @returns {number}
+ */
 function random() {
   return Math.round(3 + Math.random() * (10000 - 3));
 }
 
-function myFunction() {
+/**
+ * Добавление товара из формы
+ */
+function formSubmit() {
     let form = document.querySelector("form");
     let product = new Product();
     product.id = random();
@@ -75,6 +50,10 @@ function myFunction() {
     arr.push(product);
 }
 
+/**
+ * Хэлпер для создания DOM элементов
+ * @param product
+ */
 function appendHtml(product) {
     let productList = document.querySelector('.product');
     let productItem = document.createElement('div');
@@ -84,11 +63,20 @@ function appendHtml(product) {
     productList.appendChild(productItem);
 }
 
+/**
+ * Удаление элементов из массива товаров и удаление DOM
+ * @param el
+ */
 function removeItem(el) {
     arr.splice(findElementIndex(el),1);
     el.parentNode.remove();
 }
 
+/**
+ * Хэлпер для поиска по массиву товаров
+ * @param el - элемент с фронта
+ * @returns {number} - индекс товара в массиве товаров
+ */
 function findElementIndex(el) {
     let id = el.parentNode.id;
     return arr.findIndex(function (el) {
@@ -96,16 +84,24 @@ function findElementIndex(el) {
     });
 }
 
+/**
+ * Функционал изменения количества товаров
+ * @param el - элемент передаваемый с фронта
+ */
 function quantityChange(el) {
     let i = findElementIndex(el);
     arr[i].quantity = parseInt(el.value, 10);
 }
 
+/**
+ * Формирование запроса
+ * POST запрос на сервер
+ */
 function sendData() {
     let data = {
         TerminalKey : "TinkoffBankTest",
-        Amount : getAmount(),
-        OrderId : "12354",
+        Amount : getAmount(), // тут строка, в Receipt - число
+        OrderId : "12354", // по неведомой причине - только числа
         Description : "Test Order",
         Receipt : {
             Email : "test@test.test",
@@ -128,12 +124,20 @@ function sendData() {
     }).then(data => window.location.replace(data.PaymentURL));
 }
 
+/**
+ * Подсчёт суммы для всего чека
+ * @returns {string} - строковое значение суммы товаров в корзине
+ */
 function getAmount() {
     let total = 0;
     arr.forEach(el => total += el.price*el.quantity*100);
     return total.toString();
 }
 
+/**
+ * Формирование массива товаров
+ * @returns {[]} - массив товаров в виде объектов
+ */
 function getItems() {
     let items = [];
     arr.forEach(el => {
