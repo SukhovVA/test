@@ -58,26 +58,26 @@ function appendHtml(product) {
     let productList = document.querySelector('.product');
     let productItem = document.createElement('div');
     productItem.classList.add('product-item');
-    productItem.innerHTML = '<div class="product-item__header">' + product.name + '</div><img src="https://via.placeholder.com/300x300"><div class="product-item__info">' + product.desc + '</div><div class="product-item__price">' + product.price + ' &#8381;</div><div class="product-item__remove" onclick="removeItem(this)"></div><input type="number" min="1" required value="1" oninput="quantityChange(this)">';
+    productItem.innerHTML = '<div class="product-item__header">' + product.name + '</div><img src="https://via.placeholder.com/300x300"><div class="product-item__info">' + product.desc + '</div><div class="product-item__price">' + product.price + ' &#8381;</div><div class="product-item__remove" onclick="removeItem(this, ' + product.id + ')"></div><input type="number" min="1" required value="1" oninput="quantityChange(this, ' + product.id + ')">';
     productList.appendChild(productItem);
 }
 
 /**
  * Удаление элементов из массива товаров и удаление DOM
- * @param el
+ * @param el - товар с фронта
+ * @param id - ижентификатор товара
  */
-function removeItem(el) {
-    arr.splice(findElementIndex(el), 1);
+function removeItem(el, id) {
+    arr.splice(findElementIndex(id), 1);
     el.parentNode.remove();
 }
 
 /**
  * Хэлпер для поиска по массиву товаров
- * @param el - элемент с фронта
  * @returns {number} - индекс товара в массиве товаров
+ * @param id - идентификатор товара
  */
-function findElementIndex(el) {
-    let id = el.parentNode.id;
+function findElementIndex(id) {
     return arr.findIndex(function (el) {
         return el.id == id;
     });
@@ -86,9 +86,10 @@ function findElementIndex(el) {
 /**
  * Функционал изменения количества товаров
  * @param el - элемент передаваемый с фронта
+ * @param id - идентификатор товара
  */
-function quantityChange(el) {
-    let i = findElementIndex(el);
+function quantityChange(el, id) {
+    let i = findElementIndex(id);
     arr[i].quantity = parseInt(el.value, 10);
 }
 
