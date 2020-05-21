@@ -51,27 +51,28 @@ class Product {
 }
 
 var arr = [
-    new Product(1, "Товар-1", "Описание товара 1", 1, 100),
+    new Product(1,"Товар-1", "Описание товара 1", 1, 100),
     new Product(2, "Товар 2", "Описание товара 2", 1, 200),
     new Product(3, "Товар 3", "Описание товара 3", 1, 300),
 ];
 
-(function f() {
-    arr.forEach(item => appendHtml(item));
-})(window,document)
+arr.forEach(item => appendHtml(item));
+
+function random() {
+  return Math.round(3 + Math.random() * (10000 - 3));
+}
 
 function myFunction() {
     let form = document.querySelector("form");
     let product = new Product();
-    product.id = arr.length;
+    product.id = random();
     product.name = form.elements.name.value;
     product.desc = form.elements.desc.value;
     product.quantity = form.elements.quantity.value;
     product.price = form.elements.price.value;
     form.reset();
-    appendHtml(product);
+    appendHtml(product, arr.length);
     arr.push(product);
-    console.log(arr)
 }
 
 function appendHtml(product) {
@@ -79,21 +80,70 @@ function appendHtml(product) {
     let productItem = document.createElement('div');
     productItem.classList.add('product-item');
     productItem.id = product.id;
-    productItem.innerHTML = '<div class="product-item__header">' + product.name + '</div><div class="product-item__info">' + product.desc + '</div><div class="product-item__price">' + product.price + '</div><div class="product-item__remove" onclick="removeItem(this)"></div>';
+    productItem.innerHTML = '<div class="product-item__header">' + product.name + '</div><img src="https://via.placeholder.com/300x300"><div class="product-item__info">' + product.desc + '</div><div class="product-item__price">' + product.price + '</div><div class="product-item__remove" onclick="removeItem(this)"></div><input type="number" min="1" required value="1" oninput="quantityChange(this)">';
     productList.appendChild(productItem);
 }
 
 function removeItem(el) {
-
+    arr.splice(findElementIndex(el),1);
     el.parentNode.remove();
 }
 
-// (function () {
-//     let products = document.querySelector('.product');
-//     for (let i = 0; arr.length; i++) {
-//         // let productItem = document.createElement('div');
-//         //     productItem = products.appendChild(productItem);
-//         //     productItem.classList.add("asdfaf");
-//         // console.log(arr[0].name);
-//     }
-// })(window,document)
+function findElementIndex(el) {
+    let id = el.parentNode.id;
+    return arr.findIndex(function (el) {
+        return el.id == id;
+    });
+}
+
+function quantityChange(el) {
+    let i = findElementIndex(el);
+    arr[i].quantity = parseInt(el.value, 10);
+}
+
+function sendData() {
+    let data = {
+        TerminalKey : "TestB",
+        Amount : getAmount(),
+        OrderId : "SomeOrderId",
+        Description : "Test Order",
+        Receipt : {
+            Email : "test@test.test",
+            Taxation : "osn",
+            Items : getItems()
+
+        }
+    }
+
+    console.table(data);
+
+    fetch("https://securepay.tinkoff.ru/v2/Init", {
+        method : "POST",
+        body : JSON.stringify(data),
+        headers : {
+            'Content-Type': 'application/json'
+        },
+    }).then(response => {
+        return response.json();
+    }).then(data => console.log(data));
+}
+
+function getAmount() {
+    let total = 0;
+    arr.forEach(el => total += el.price*el.quantity*100);
+    return total;
+}
+
+function getItems() {
+    let items = [];
+    arr.forEach(el => {
+        items.push({
+            "Name": el.name,
+            "Price": el.price*100,
+            "Quantity": el.quantity.toString(),
+            "Amount": el.price*el.quantity*100,
+            "Tax": "vat10",
+        })
+    });
+    return items;
+}

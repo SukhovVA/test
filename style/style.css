@@ -231,4 +231,11 @@ form {
   display: flex;
   flex-direction: column;
 }
+.yellow {
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+img {
+  max-width: 100%;
+}
 /*# sourceMappingURL=style.css.map */
